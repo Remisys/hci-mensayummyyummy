@@ -1,17 +1,11 @@
 import Image from 'next/image';
+import { LanguageType, MealInfo } from './db';
 
-export const PageMeal: React.FC<{
-    ingredients: string[];
-    nutritional_value: string[];
-    value: string[];
-    isVegetarian: boolean;
-    isGlutenFree: boolean;
-    isVgan: boolean;
-    imageSrc: string;
-  }> = ({ ingredients, nutritional_value, value, isVegetarian, isGlutenFree, isVgan, imageSrc }) => {
+export const PageMeal: React.FC<MealInfo & {language : LanguageType}> = ({imageSrc,  isVegetarian, GlutinFree, isVgan, ingredients, nutritional_value, value, language}) => {
+    
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <h1>Meal Details</h1>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px'}}>       
+        <h1>{language === "EN"? "Meal Details" : "Mahlzeitdetails"}</h1>
         <div style={{ marginBottom: '16px' }}>
           <Image
             alt=""
@@ -25,7 +19,7 @@ export const PageMeal: React.FC<{
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr>
-                <th style={{ border: '1px solid white', padding: '8px' }}>Ingredient</th>
+                <th style={{ border: '1px solid white', padding: '8px' }}>{language === "EN"? "Ingredients" : "Zutaten"}</th>
               </tr>
             </thead>
             <tbody>
@@ -38,17 +32,17 @@ export const PageMeal: React.FC<{
           </table>
         </div>
         <div>
-          <p style={{ fontSize: '18px' }}>Vegetarian: {isVegetarian ? 'Yes' : 'No'}</p>
-          <p style={{ fontSize: '18px' }}>Gluten-free: {isGlutenFree ? 'Yes' : 'No'}</p>
-          <p style={{ fontSize: '18px' }}>Vegan: {isVgan ? 'Yes' : 'No'}</p>
+          <p style={{ fontSize: '18px' }}>{`${language === "EN"? "Vegetarian" : "Vegetarier"} : ${isVegetarian ? 'Yes' : 'No'}`}</p>
+          <p style={{ fontSize: '18px' }}> {`${language === "EN"? "Glutin Free" : "Glutinfrei"} : ${GlutinFree ? 'Yes' : 'No'}`}</p>
+          <p style={{ fontSize: '18px' }}>Vegan: { isVgan ? 'Yes' : 'No'}</p>
         </div>
         <div>
-          <h2 style={{ marginTop: '16px' }}>Nutritional Information</h2>
+          <h2 style={{ marginTop: '16px' }}>{language === "EN"? "Nutritional Information" : "Ernährungsinformation"}</h2>
           <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '8px' }}>
             <thead>
               <tr>
-                <th style={{ border: '1px solid white', padding: '8px' }}>Nutrient</th>
-                <th style={{ border: '1px solid white', padding: '8px' }}>Value</th>
+                <th style={{ border: '1px solid white', padding: '8px' }}>{language === "EN"? "Nutrient" : "Ernährung"}</th>
+                <th style={{ border: '1px solid white', padding: '8px' }}>{language === "EN"? "Value" : "Gehalt"}</th>
               </tr>
             </thead>
             <tbody>

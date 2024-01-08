@@ -1,14 +1,10 @@
-// Import Image from next/image
+"use client"
+import { getMeals, LanguageType } from '@/app/db';
 import { PageMeal } from '@/app/PageMeal';
-import { getMeals, meals } from '@/app/db';
+import { useSearchParams } from 'next/navigation';
 
-// Use the correct comment for indicating a client file
-// @jsxImportSource next
-
-
-
-const Page: React.FC = () => {
-    return <PageMeal {...getMeals('DE')[2]} />;
-  };
+const Page: React.FC = () => {  
+const lang = useSearchParams().get("lang") ?? "DE" 
+return (<PageMeal {...getMeals(lang as LanguageType)[2]} language={lang as LanguageType} />) }
   
-  export default Page;
+export default Page;

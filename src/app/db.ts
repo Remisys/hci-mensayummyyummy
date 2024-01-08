@@ -1,4 +1,21 @@
-export const meals = [
+
+export type MealInfo = {
+    id : number;
+    text: string;
+    description: string;
+    href: string;
+    nutritional_value: string[];
+    value: string[];
+    imageSrc: string;
+    ingredients: string[];
+    isVegetarian: boolean;
+    isVgan: boolean;
+    GlutinFree: boolean;
+    price: number;
+}
+
+
+const meals : MealInfo[] = [
     {
       id: 1,
       text: "Salad",
@@ -46,7 +63,7 @@ export const meals = [
     },
   ];
 
-export const mealsDE = [
+const mealsDE : MealInfo[] = [
     {
       id: 1,
       text: "Salat",
@@ -95,7 +112,7 @@ export const mealsDE = [
   ];
 
   
-export const getMeals = (lang: string) => {
+export const getMeals = (lang: LanguageType) => {
     if(lang == 'DE'){
         return mealsDE
     }
@@ -103,4 +120,6 @@ export const getMeals = (lang: string) => {
     {
         return meals
     }
-};
+}
+
+export type LanguageType = "DE" | "EN"
