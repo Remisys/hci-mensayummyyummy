@@ -1,2 +1,14 @@
-const page: React.FC = () => <div>Test 1</div>;
-export default page;
+// Import Image from next/image
+import { meals } from '@/app/db';
+import { PageMeal } from '@/app/PageMeal';
+// Use the correct comment for indicating a client file
+// @jsxImportSource next
+
+
+const Page: React.FC = () => {
+
+  
+    return <PageMeal {...getMeals('DE')[0]} />;
+  };
+  
+  export default Page;
