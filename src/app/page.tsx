@@ -15,7 +15,7 @@ const Home : React.FC = () => {
   
   return (
     <>
-      <h1 className="text-4xl font-semibold w-full text-center">MensaYummyYummy DE</h1>
+      <h1 className="text-4xl font-semibold w-full text-center">MensaYummyYummy</h1>
       <div className="w-full grow items-center flex">
         <div className="grid text-center w-full lg:mb-0 lg:grid-cols-3 lg:text-left gap-[5%]">
           {/* Map over filtered meals and render MealButton */}
