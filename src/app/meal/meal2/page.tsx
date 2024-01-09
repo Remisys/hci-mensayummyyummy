@@ -1,11 +1,6 @@
-"use client"
-import { getMeals, LanguageType } from '@/app/db';
-import { PageMeal } from '@/app/PageMeal';
-import { useSearchParams } from 'next/navigation';
+"use client";
+import { PageMeal } from "@/app/PageMeal";
 
-const Page: React.FC = () => {
-  const lang = useSearchParams().get("lang") ?? "DE" 
-  return (<PageMeal {...getMeals(lang as LanguageType)[1]} language={lang as LanguageType} />) 
-}
-  
+const Page: React.FC = () => <PageMeal id={1} />;
+
 export default Page;

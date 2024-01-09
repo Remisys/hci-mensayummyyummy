@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { createContext } from "react"
-import { LanguageType } from "./db"
+import { createContext } from "react";
+import { LanguageType } from "./db";
 
-export const contextLanguage = createContext<LanguageType>("EN")
+export const contextLanguage = createContext<LanguageType>("en");
