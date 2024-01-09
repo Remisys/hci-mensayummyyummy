@@ -1,3 +1,4 @@
+"use client";
 export type MealInfo = {
   id: number;
   text: string;
@@ -11,10 +12,14 @@ export type MealInfo = {
   isVegan: boolean;
   isGlutinFree: boolean;
   price: number;
+  stairway: "A" | "B" | "C";
 };
-
-const meals: MealInfo[] = [
-  {
+type MealMap = {
+  [key: string]: MealInfo;
+};
+const meals: MealMap = {
+  salad: {
+    stairway: "C",
     id: 1,
     text: "Salad",
     description: "A fresh and healthy salad with a mix of colorful vegetables",
@@ -37,7 +42,8 @@ const meals: MealInfo[] = [
     isGlutinFree: true,
     price: 4.99,
   },
-  {
+  pizza: {
+    stairway: "A",
     id: 2,
     text: "Pizza",
     description:
@@ -53,7 +59,8 @@ const meals: MealInfo[] = [
     nutritional_value: ["Calory", "fat", "Protine", "Sugar", "Fiber"],
     value: ["430 g", "70 g", "190 g", "30 g", "190 mg"],
   },
-  {
+
+  pie: {
     id: 3,
     text: "Pie",
     ingredients: ["Cheese", "Berry", "Cream"],
@@ -67,11 +74,12 @@ const meals: MealInfo[] = [
     isVegan: false,
     isGlutinFree: false,
     price: 3.99,
+    stairway: "B",
   },
-];
+};
 
-const mealsDE: MealInfo[] = [
-  {
+const mealsDE: MealMap = {
+  salad: {
     id: 1,
     text: "Salat",
     description:
@@ -100,8 +108,9 @@ const mealsDE: MealInfo[] = [
     isVegan: false,
     isGlutinFree: true,
     price: 4.99,
+    stairway: "C",
   },
-  {
+  pizza: {
     id: 2,
     text: "Pizza",
     description:
@@ -122,8 +131,9 @@ const mealsDE: MealInfo[] = [
       "Ballaststoffe",
     ],
     value: ["430 g", "70 g", "190 g", "30 g", "190 mg"],
+    stairway: "A",
   },
-  {
+  pie: {
     id: 3,
     text: "Kuchen",
     ingredients: ["Käse", "Beeren", "Sahne"],
@@ -143,15 +153,12 @@ const mealsDE: MealInfo[] = [
     isVegan: false,
     isGlutinFree: false,
     price: 3.99,
+    stairway: "B",
   },
-];
+};
 
 export const getMeals = (lang: LanguageType) => {
-  if (lang == "de") {
-    return mealsDE;
-  } else {
-    return meals;
-  }
+  return lang === "de" ? mealsDE : meals;
 };
 
 export type LanguageType = "de" | "en";

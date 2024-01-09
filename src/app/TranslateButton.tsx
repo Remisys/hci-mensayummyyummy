@@ -1,14 +1,14 @@
-// Import necessary libraries and components
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LanguageType } from "./db";
 import { useTranslationPlus } from "./i18n";
 
 export const TranslateButton = () => {
   const { i18n } = useTranslationPlus();
-  const [language, setLanguage] = useState<LanguageType>(
-    i18n.language as LanguageType
-  );
+  const [language, setLanguage] = useState<LanguageType>("de");
+  useEffect(() => {
+    i18n.changeLanguage(language);
+  }, [i18n, language]);
 
   return (
     <button

@@ -1,6 +1,4 @@
 import i18n from "i18next";
-import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
 import { initReactI18next, useTranslation } from "react-i18next";
 import deJson from "./de.json";
 
@@ -30,10 +28,7 @@ i18n
   });
 
 export const useTranslationPlus = () => {
-  const lang = useSearchParams().get("lang") ?? "de";
   const { t, i18n } = useTranslation();
-  useEffect(() => {
-    i18n.changeLanguage(lang);
-  }, [i18n, lang]);
+
   return { t, i18n };
 };
