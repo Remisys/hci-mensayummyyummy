@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
+import { Stairway } from "./MealButton";
 import { MealInfo } from "./db";
 import deJson from "./de.json";
 type translationKeys = keyof typeof deJson;
@@ -17,6 +18,7 @@ export const PageMeal: React.FC<MealInfo> = ({
   nutritional_value,
   value,
   text,
+  stairway,
   description,
 }) => {
   const lang = useSearchParams().get("lang") ?? "de";
@@ -32,6 +34,7 @@ export const PageMeal: React.FC<MealInfo> = ({
     <div className=" flex flex-col gap-[30px] w-full p-8 border-r ">
       <div className="flex justify-between w-100">
         <h1 className="text-2xl font-semibold">{text}</h1>
+        <Stairway stairway={stairway} />
         <Link href=".." className="text-2xl font-semibold ">
           <IoArrowBack />
         </Link>
