@@ -35,7 +35,7 @@ export const Home: React.FC<{ showingMeal?: string }> = ({
           </button>
         )}
 
-        {showingMeal && <h1>50s</h1>}
+        {showingMeal && <h1></h1>}
       </div>
 
       <div className="w-full grow items-center flex my-10">
