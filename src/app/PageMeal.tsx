@@ -21,7 +21,7 @@ export const PageMeal: React.FC<MealInfo> = ({
   stairway,
   description,
 }) => {
-  const lang = useSearchParams().get("lang") ?? "de";
+  const lang = useSearchParams().get("lang") ?? "en";
   const t = useCallback(
     (tKey: string) => {
       return lang === "de" ? deJson[tKey as translationKeys] : tKey;
@@ -40,8 +40,8 @@ export const PageMeal: React.FC<MealInfo> = ({
         </Link>
       </div>
 
-      <div className="flex w-full gap-5 justify-between">
-        <div className="relative">
+      <div className="flex w-full gap-5 items-center lg:items-stretch lg:justify-between flex-col lg:flex-row">
+        <div className="relative w-[300px] h-[300px]">
           <Image
             alt=""
             className="w-[300px] h-[300px] rounded-lg"
@@ -56,7 +56,7 @@ export const PageMeal: React.FC<MealInfo> = ({
             }`}
           >{`💖`}</p>
         </div>
-        <div className="w-[calc(100%-350px)] line flex flex-col justify-between gap-5">
+        <div className="lg:w-[calc(100%-350px)] flex flex-col justify-between gap-5">
           <div className=" border border-blue-gray-50 border-solid rounded-lg grow p-5">
             <p className="text-xl h-[80%] ">{`${description}`}</p>
           </div>
@@ -92,7 +92,7 @@ export const PageMeal: React.FC<MealInfo> = ({
           </tbody>
         </table>
       </div>
-      <div className="flex justify-between border border-blue-gray-50 border-solid rounded-lg p-5">
+      <div className="flex justify-between border border-blue-gray-50 border-solid rounded-lg p-5 flex-wrap">
         <YesNoIcon checked={isVegan} text={t("Vegan")} />
         <YesNoIcon checked={isVegetarian} text={t("Vegetarian")} />
         <YesNoIcon checked={isGlutinFree} text={t("Gluten Free")} />

@@ -8,11 +8,11 @@ const Layout: FC<{ params: { meal: string }; children: ReactNode }> = ({
   children,
 }) => {
   return (
-    <div className="flex flex-row w-100 h-screen">
-      <div className="w-[50%] overflow-y-auto h-100 max-h-screen">
+    <div className="flex flex-col lg:flex-row w-100 h-screen">
+      <div className="w-full h-[50%] lg:w-[50%] overflow-y-auto lg:h-full max-h-screen">
         {children}
       </div>
-      <div className="w-[50%] p-5 overflow-y-auto h-full max-h-screen">
+      <div className="w-full h-[50%] border   lg:border-none lg:w-[50%] p-5 overflow-y-auto lg:h-full max-h-screen">
         <Home showingMeal={meal} />
       </div>
     </div>

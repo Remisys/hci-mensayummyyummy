@@ -17,20 +17,22 @@ export const Home: React.FC<{ showingMeal?: string }> = ({
   const [loggedIn, setLoggedIn] = useState(true);
   return (
     <div
-      className={`flex h-screen flex-col items-stretch  w-full${
+      className={`flex  flex-col items-stretch  w-full${
         showingMeal ? "" : "px-10 py-10 "
       } `}
     >
-      <div className="flex justify-between w-full ">
-        <h1 className="text-3xl font-semibold px-5 ">MensaYummyYummy</h1>
+      <div className="flex flex-col lg:flex-row justify-between w-full ">
+        <h1 className="w-full text-xl  lg:text-3xl font-semibold px-5 py-3 text-center ">
+          MensaYummyYummy
+        </h1>
         {!showingMeal && loggedIn && (
-          <button className="text-2xl border hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 py-3 px-3 rounded-full ">
+          <button className="text-2xl border hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 py-3 px-3 rounded-full flex items-center justify-center ">
             <IoPeople />
           </button>
         )}
 
         {!showingMeal && !loggedIn && (
-          <button className="text-2xl border bg-green-600 text-white   hover:border-red-300 hover:text-red-500 hover:bg-red-100 py-3 px-3 rounded-full ">
+          <button className="text-2xl border bg-green-600 text-white   hover:border-red-300 hover:text-red-500 hover:bg-red-100 py-3 px-3 rounded-full flex items-center justify-center">
             <IoPeople />
           </button>
         )}
@@ -38,7 +40,7 @@ export const Home: React.FC<{ showingMeal?: string }> = ({
         {showingMeal && <h1></h1>}
       </div>
 
-      <div className="w-full grow items-center flex my-10">
+      <div className="w-full grow items-center flex my-10 ">
         <div
           className={`flex flex-col w-full gap-10 ${
             showingMeal ? "" : "lg:flex-row lg:justify-between"
@@ -47,6 +49,7 @@ export const Home: React.FC<{ showingMeal?: string }> = ({
           <Meals showingMeal={showingMeal} />
         </div>
       </div>
+
       <TranslateButton />
     </div>
   );

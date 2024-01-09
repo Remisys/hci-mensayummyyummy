@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 const Page: React.FC<{ params: { meal: string } }> = ({ params: { meal } }) => {
-  const lang = useSearchParams().get("lang") ?? "de";
+  const lang = useSearchParams().get("lang") ?? "en";
   const mealInfo = getMeals(lang as LanguageType)[meal];
 
   if (mealInfo) {
