@@ -9,7 +9,7 @@ export const CardScan = () => {
   const randomProfile = keys[Math.floor(Math.random() * keys.length)];
   return (
     <div className="w-full h-full flex flex-col items-center justify-center text-xl gap-10">
-      <h1>{t("Scan your card below!")}</h1>
+      <h1>{t("Scan your card below and click the screen!")}</h1>
       <Link href={`/?user=${randomProfile}`}>
         <Image
           src={

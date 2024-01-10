@@ -19,6 +19,7 @@ export const Home: React.FC<{ showingMeal?: string }> = ({
 
   const params = useSearchParams();
   const user = params.get("user");
+  const { t } = useTranslation();
   return (
     <div
       className={`flex  flex-col items-stretch  w-full h-full ${
@@ -29,6 +30,11 @@ export const Home: React.FC<{ showingMeal?: string }> = ({
         <h1 className="w-full text-xl  lg:text-3xl font-semibold px-5  text-center ">
           MensaYummyYummy
         </h1>
+        {showingMeal && (
+          <h1 className="w-full text-xl  lg:text-3xl font-semibold px-5  text-center ">
+            {t("Guest")}
+          </h1>
+        )}
         {!showingMeal && !user && (
           <Link href="/scan">
             <button className="text-2xl border hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 py-3 px-3 rounded-full flex items-center justify-center ">
