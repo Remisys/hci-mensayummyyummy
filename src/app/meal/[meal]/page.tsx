@@ -1,6 +1,6 @@
 "use client";
-import { PageMeal } from "@/app/PageMeal";
 import { LanguageType, getMeals } from "@/app/db";
+import { PageMeal } from "@/app/meal/[meal]/PageMeal";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 

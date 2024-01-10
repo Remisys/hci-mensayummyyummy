@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { RootClientPage } from "./RootClientPage";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <main className="flex min-h-screen flex-col items-stretch  w-full h-screen overflow-y-clip max-h-screen">
-          {children}
+          <RootClientPage>{children}</RootClientPage>
         </main>
       </body>
     </html>

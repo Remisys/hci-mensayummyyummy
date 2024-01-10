@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { GiStairs } from "react-icons/gi";
@@ -13,7 +14,7 @@ export const MealButton: React.FC<
   }
 > = ({
   stairway,
-  text,
+  name: text,
   description,
   children,
   price,
@@ -21,10 +22,11 @@ export const MealButton: React.FC<
   splitScreen = false,
 }) => {
   const { t, i18n } = useTranslation();
-
+  const user = useSearchParams().get("user");
+  const userParam = `&user=${user}`;
   return (
     <Link
-      href={`/meal/${meal}?lang=${i18n.language}`}
+      href={`/meal/${meal}?lang=${i18n.language}${user ? userParam : ""}`}
       className={`${
         splitScreen ? "items-start" : ""
       } w-full group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 flex flex-col items-center xl:items-start`}

@@ -1,12 +1,14 @@
 "use client";
+import { ProfilesContext } from "@/app/ProfilesContext";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useContext } from "react";
 import { IoArrowBack } from "react-icons/io5";
-import { Stairway } from "./MealButton";
-import { MealInfo } from "./db";
-import deJson from "./de.json";
+import { Stairway } from "../../MealButton";
+import type { Profiles } from "../../db";
+import { MealInfo } from "../../db";
+import deJson from "../../de.json";
 type translationKeys = keyof typeof deJson;
 
 export const PageMeal: React.FC<MealInfo> = ({
@@ -17,11 +19,14 @@ export const PageMeal: React.FC<MealInfo> = ({
   isGlutinFree,
   nutritional_value,
   value,
-  text,
+  name,
   stairway,
   description,
+  id,
 }) => {
   const lang = useSearchParams().get("lang") ?? "en";
+  const user = useSearchParams().get("user") as Profiles | null;
+  const userParam = `?user=${user}`;
   const t = useCallback(
     (tKey: string) => {
       return lang === "de" ? deJson[tKey as translationKeys] : tKey;
@@ -29,13 +34,19 @@ export const PageMeal: React.FC<MealInfo> = ({
     [lang]
   );
 
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [profiles, setProfiles] = useContext(ProfilesContext);
+  const favoriteFoods = user && profiles[user];
+  const isFavorite = favoriteFoods && favoriteFoods.some((fav) => fav === id);
+
   return (
     <div className=" flex flex-col gap-[30px] w-full p-8 border-r ">
       <div className="flex justify-between w-100">
-        <h1 className="text-2xl font-semibold">{text}</h1>
+        <h1 className="text-2xl font-semibold">{name}</h1>
         <Stairway stairway={stairway} />
-        <Link href=".." className="text-2xl font-semibold ">
+        <Link
+          href={`..${user ? userParam : ""}`}
+          className="text-2xl font-semibold "
+        >
           <IoArrowBack />
         </Link>
       </div>
@@ -50,26 +61,37 @@ export const PageMeal: React.FC<MealInfo> = ({
             width={2080}
           />
 
-          <p
-            className={`absolute top-[12px] right-[12px] text-2xl  transition-all ease-out duration-200 ${
-              isFavorite ? "opacity-100" : "opacity-0"
-            }`}
-          >{`💖`}</p>
+          {isFavorite && (
+            <p
+              className={`absolute top-[12px] right-[12px] text-2xl  transition-all ease-out duration-200 ${
+                user ? "opacity-100" : "opacity-0"
+              }`}
+            >{`💖`}</p>
+          )}
         </div>
         <div className="lg:w-[calc(100%-350px)] flex flex-col justify-between gap-5">
           <div className=" border border-blue-gray-50 border-solid rounded-lg grow p-5">
             <p className="text-xl h-[80%] ">{`${description}`}</p>
           </div>
-          <button
-            className={
-              "rounded-lg border border-solid p-2 hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 "
-            }
-            onClick={() => setIsFavorite((x) => !x)}
-          >
-            {!isFavorite
-              ? `${t("Add to your Favorites")} 😍`
-              : `${t("Remove from your Favorites")} `}
-          </button>
+          {user && (
+            <button
+              className={
+                "rounded-lg border border-solid p-2 hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 "
+              }
+              onClick={() => {
+                setProfiles((profiles) => {
+                  profiles[user] = isFavorite
+                    ? profiles[user].filter((x) => x !== id)
+                    : [...profiles[user], id];
+                  return { ...profiles };
+                });
+              }}
+            >
+              {user && !isFavorite
+                ? `${t("Add to your Favorites")} 😍`
+                : `${t("Remove from your Favorites")} `}
+            </button>
+          )}
         </div>
       </div>
       <div className="border border-blue-gray-50 border-solid rounded-lg px-2 py-2">

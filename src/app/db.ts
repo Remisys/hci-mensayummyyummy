@@ -1,7 +1,7 @@
 "use client";
 export type MealInfo = {
-  id: number;
-  text: string;
+  id: string;
+  name: string;
   description: string;
   href: string;
   nutritional_value: string[];
@@ -20,8 +20,8 @@ type MealMap = {
 const meals: MealMap = {
   salad: {
     stairway: "C",
-    id: 1,
-    text: "Salad",
+    id: "salad",
+    name: "Salad",
     description: "A fresh and healthy salad with a mix of colorful vegetables",
     href: "meal/meal1",
     nutritional_value: ["Calory", "fat", "Protine", "Sugar", "Fiber"],
@@ -44,8 +44,8 @@ const meals: MealMap = {
   },
   pizza: {
     stairway: "A",
-    id: 2,
-    text: "Pizza",
+    id: "pizza",
+    name: "Pizza",
     description:
       "A delicious pizza topped with healthy ingredients and melted cheese.",
     href: "meal/meal2",
@@ -61,8 +61,8 @@ const meals: MealMap = {
   },
 
   pie: {
-    id: 3,
-    text: "Pie",
+    id: "pie",
+    name: "Pie",
     ingredients: ["Cheese", "Berry", "Cream"],
     description: "A cheese cake filled with Berry",
     nutritional_value: ["Calory", "fat", "Protine", "Sugar", "Fiber"],
@@ -80,8 +80,8 @@ const meals: MealMap = {
 
 const mealsDE: MealMap = {
   salad: {
-    id: 1,
-    text: "Salat",
+    id: "salad",
+    name: "Salat",
     description:
       "Ein frischer und gesunder Salat mit einer Mischung aus buntem Gemüse",
     href: "meal/meal1",
@@ -111,8 +111,8 @@ const mealsDE: MealMap = {
     stairway: "C",
   },
   pizza: {
-    id: 2,
-    text: "Pizza",
+    id: "pizza",
+    name: "Pizza",
     description:
       "Eine leckere Pizza, belegt mit gesunden Zutaten und geschmolzenem Käse.",
     href: "meal/meal2",
@@ -134,8 +134,8 @@ const mealsDE: MealMap = {
     stairway: "A",
   },
   pie: {
-    id: 3,
-    text: "Kuchen",
+    id: "pie",
+    name: "Kuchen",
     ingredients: ["Käse", "Beeren", "Sahne"],
     description: "Ein mit Beeren gefüllter Käsekuchen",
     nutritional_value: [
@@ -156,9 +156,15 @@ const mealsDE: MealMap = {
     stairway: "B",
   },
 };
+export const profiles = {
+  thomas: ["salad"],
+  lena: ["pie"],
+  hans: ["pizza", "pie"],
+};
 
 export const getMeals = (lang: LanguageType) => {
   return lang === "de" ? mealsDE : meals;
 };
 
 export type LanguageType = "de" | "en";
+export type Profiles = keyof typeof profiles;
