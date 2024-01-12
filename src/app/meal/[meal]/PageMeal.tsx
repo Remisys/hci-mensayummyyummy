@@ -2,13 +2,13 @@
 import { ProfilesContext } from "@/app/ProfilesContext";
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { useCallback, useContext } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import { Stairway } from "../../MealButton";
-import type { Profiles } from "../../db";
+import type { LanguageType, Profiles } from "../../db";
 import { MealInfo } from "../../db";
 import deJson from "../../de.json";
+import { useGetDatabaseValue } from "./query";
 type translationKeys = keyof typeof deJson;
 
 export const PageMeal: React.FC<MealInfo> = ({
@@ -24,8 +24,8 @@ export const PageMeal: React.FC<MealInfo> = ({
   description,
   id,
 }) => {
-  const lang = useSearchParams().get("lang") ?? "en";
-  const user = useSearchParams().get("user") as Profiles | null;
+  const lang = (useGetDatabaseValue("lang") as LanguageType) ?? "en";
+  const user = useGetDatabaseValue("user") as Profiles | null;
   const userParam = `?user=${user}`;
   const t = useCallback(
     (tKey: string) => {
@@ -120,7 +120,7 @@ export const PageMeal: React.FC<MealInfo> = ({
         <YesNoIcon checked={isGlutinFree} text={t("Gluten Free")} />
       </div>
       <div>
-        <div className="relative flex flex-col w-full h-full overflow-scroll  bg-white border border-blue-gray-50 border-solid rounded-lg">
+        <div className="relative flex flex-col w-full h-full bg-white border border-blue-gray-50 border-solid rounded-lg">
           <table className="w-full text-left table-auto min-w-max">
             <thead>
               <tr>

@@ -9,7 +9,8 @@ import { IoPeople } from "react-icons/io5";
 import { MealButton } from "./MealButton";
 import { ProfilesContext } from "./ProfilesContext";
 import { TranslateButton } from "./TranslateButton";
-import { LanguageType, Profiles, getMeals } from "./db";
+import { LanguageType, Profiles, getMeals, profiles } from "./db";
+import { useGetDatabaseValue } from "./meal/[meal]/query";
 // Define the Home component
 
 export const Home: React.FC<{ showingMeal?: string }> = ({
@@ -18,7 +19,7 @@ export const Home: React.FC<{ showingMeal?: string }> = ({
   // Filter vegetarian meals
 
   const params = useSearchParams();
-  const user = params.get("user");
+  const user = useGetDatabaseValue("user") ?? "undefined";
   const { t } = useTranslation();
   return (
     <div
@@ -35,17 +36,17 @@ export const Home: React.FC<{ showingMeal?: string }> = ({
             {t("Guest")}
           </h1>
         )}
-        {!showingMeal && !user && (
+        {!showingMeal && !(user in profiles) && (
           <Link href="/scan">
-            <button className="text-2xl border hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 py-3 px-3 rounded-full flex items-center justify-center ">
+            <button className="w-full lg:w-auto text-2xl border hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 py-3 px-3 rounded-full flex items-center justify-center ">
               <IoPeople />
             </button>
           </Link>
         )}
 
-        {!showingMeal && user && (
+        {!showingMeal && user in profiles && (
           <Link href="/">
-            <button className="text-2xl border bg-green-600 text-white   hover:border-red-300 hover:text-red-500 hover:bg-red-100 py-3 px-3 rounded-full flex items-center justify-center">
+            <button className="w-full lg:w-auto text-2xl border bg-green-600 text-white   hover:border-red-300 hover:text-red-500 hover:bg-red-100 py-3 px-3 rounded-full flex items-center justify-center">
               <IoPeople />
             </button>
           </Link>
@@ -75,7 +76,7 @@ const Meals: FC<{ showingMeal?: string }> = ({ showingMeal }) => {
     getMeals(i18n.language as LanguageType)
   ).filter(([meal, mealInfo]) => meal !== "");
   const params = useSearchParams();
-  const user = params.get("user") as Profiles | null;
+  const user = useGetDatabaseValue("user") as string | null;
   const [profiles, _] = useContext(ProfilesContext);
   return (
     <>
@@ -96,7 +97,8 @@ const Meals: FC<{ showingMeal?: string }> = ({ showingMeal }) => {
             />
             {user &&
               !showingMeal &&
-              profiles[user].some((fav) => fav === mealInfo.id) && (
+              user in profiles &&
+              profiles[user as Profiles].some((fav) => fav === mealInfo.id) && (
                 <p
                   className={`absolute top-[12px] right-[12px] text-2xl  transition-all ease-out duration-200 ${
                     true ? "opacity-100" : "opacity-0"

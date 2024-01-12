@@ -168,3 +168,7 @@ export const getMeals = (lang: LanguageType) => {
 
 export type LanguageType = "de" | "en";
 export type Profiles = keyof typeof profiles;
+export const loginname = "admin";
+export const loginpass = "admin";
+export const dbname = "gmci";
+export const dburl = "http://127.0.0.1:5984/" + dbname + "/";
