@@ -19,8 +19,15 @@ export const Home: React.FC<{ showingMeal?: string }> = ({
   showingMeal: showingMeal,
 }) => {
   const [timeLeft, setTimeLeft] = useState(120); 
-  const timerStyle = "absolute top-0 left-0 p-5";
-
+  const timerStyle = `
+    absolute top-0 left-0 m-4
+    bg-white text-black
+    px-3 py-2
+    border border-gray-300
+    rounded-lg
+    shadow
+    font-bold text-lg
+  `;
   const params = useSearchParams();
   const user = useGetDatabaseValue("user") ?? "undefined";
   const { t } = useTranslation();
