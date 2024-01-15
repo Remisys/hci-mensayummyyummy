@@ -1,4 +1,5 @@
 import i18n from "i18next";
+import { useCallback } from "react";
 import { initReactI18next, useTranslation } from "react-i18next";
 import deJson from "./de.json";
 
@@ -31,4 +32,17 @@ export const useTranslationPlus = () => {
   const { t, i18n } = useTranslation();
 
   return { t, i18n };
+};
+
+export type translationKeys = keyof typeof deJson;
+
+export const useCustomTranslation = () => {
+  const { i18n } = useTranslation();
+  const t = useCallback(
+    (tKey: string) => {
+      return i18n.language === "de" ? deJson[tKey as translationKeys] : tKey;
+    },
+    [i18n.language]
+  );
+  return { t };
 };

@@ -12,8 +12,8 @@ const Layout: FC<{ params: { meal: string }; children: ReactNode }> = ({
       <div className="w-full h-[50%] lg:w-[50%] overflow-y-auto lg:h-full max-h-screen">
         {children}
       </div>
-      <div className="w-full h-[50%] border   lg:border-none lg:w-[50%] p-5 overflow-y-auto lg:h-full max-h-screen">
-        <Home showingMeal={meal} />
+      <div className="w-full h-[50%] border lg:border-none lg:w-[50%] p-5 overflow-y-auto lg:h-full max-h-screen">
+        <Home guestMode />
       </div>
     </div>
   );

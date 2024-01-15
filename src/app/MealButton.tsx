@@ -5,6 +5,7 @@ import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { GiStairs } from "react-icons/gi";
 import type { MealInfo } from "./db";
+import { useCustomTranslation } from "./i18n";
 // Define the MealButton component
 export const MealButton: React.FC<
   MealInfo & {
@@ -21,7 +22,8 @@ export const MealButton: React.FC<
   meal,
   splitScreen = false,
 }) => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
+  const { t } = useCustomTranslation();
   const params = useSearchParams();
   const user = params.get("user");
   const userParam = `&user=${user}`;

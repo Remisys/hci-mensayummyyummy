@@ -1,15 +1,14 @@
 "use client";
 import { ProfilesContext } from "@/app/ProfilesContext";
+import { useCustomTranslation } from "@/app/i18n";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useContext } from "react";
+import { useContext } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import { Stairway } from "../../MealButton";
 import type { LanguageType, Profiles } from "../../db";
 import { MealInfo } from "../../db";
-import deJson from "../../de.json";
 import { useGetDatabaseValue } from "./query";
-type translationKeys = keyof typeof deJson;
 
 export const PageMeal: React.FC<MealInfo> = ({
   imageSrc,
@@ -27,12 +26,7 @@ export const PageMeal: React.FC<MealInfo> = ({
   const lang = (useGetDatabaseValue("lang") as LanguageType) ?? "en";
   const user = useGetDatabaseValue("user") as Profiles | null;
   const userParam = `?user=${user}`;
-  const t = useCallback(
-    (tKey: string) => {
-      return lang === "de" ? deJson[tKey as translationKeys] : tKey;
-    },
-    [lang]
-  );
+  const { t } = useCustomTranslation();
 
   const [profiles, setProfiles] = useContext(ProfilesContext);
   const favoriteFoods = user && profiles[user];

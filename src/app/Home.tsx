@@ -2,7 +2,6 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { FC, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { IoPeople } from "react-icons/io5";
@@ -10,33 +9,37 @@ import { MealButton } from "./MealButton";
 import { ProfilesContext } from "./ProfilesContext";
 import { TranslateButton } from "./TranslateButton";
 import { LanguageType, Profiles, getMeals, profiles } from "./db";
+import { useCustomTranslation } from "./i18n";
 import { useGetDatabaseValue } from "./meal/[meal]/query";
+
 // Define the Home component
 
-export const Home: React.FC<{ showingMeal?: string }> = ({
-  showingMeal: showingMeal,
+export const Home: React.FC<{ guestMode?: boolean }> = ({
+  guestMode = false,
 }) => {
   // Filter vegetarian meals
 
-  const params = useSearchParams();
   const user = useGetDatabaseValue("user") ?? "undefined";
-  const { t } = useTranslation();
+  const { t: customT } = useCustomTranslation();
+  const { t: originalT } = useTranslation();
+  const t = guestMode ? originalT : customT;
   return (
     <div
-      className={`flex  flex-col items-stretch  w-full h-full ${
-        showingMeal ? "" : "px-10 py-10 "
+      className={`flex  flex-col items-stretch  w-full h-full  py-10 px-10 ${
+        user in profiles ? "" : " "
       } `}
     >
       <div className="flex flex-col lg:flex-row justify-between w-full  ">
-        <h1 className="w-full text-xl  lg:text-3xl font-semibold px-5  text-center ">
+        <h1 className="w-full text-xl  lg:text-3xl font-semibold   text-center ">
           MensaYummyYummy
         </h1>
-        {showingMeal && (
-          <h1 className="w-full text-xl  lg:text-3xl font-semibold px-5  text-center ">
+        {guestMode && (
+          <h1 className="w-full text-xl  lg:text-3xl font-semibold text-center ">
             {t("Guest")}
           </h1>
         )}
-        {!showingMeal && !(user in profiles) && (
+
+        {!(user in profiles) && !guestMode && (
           <Link href="/scan">
             <button className="w-full lg:w-auto text-2xl border hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 py-3 px-3 rounded-full flex items-center justify-center ">
               <IoPeople />
@@ -44,40 +47,40 @@ export const Home: React.FC<{ showingMeal?: string }> = ({
           </Link>
         )}
 
-        {!showingMeal && user in profiles && (
+        {user in profiles && !guestMode && (
           <Link href="/">
             <button className="w-full lg:w-auto text-2xl border bg-green-600 text-white   hover:border-red-300 hover:text-red-500 hover:bg-red-100 py-3 px-3 rounded-full flex items-center justify-center">
               <IoPeople />
             </button>
           </Link>
         )}
-
-        {showingMeal && <h1></h1>}
       </div>
 
       <div className="w-full grow items-center flex my-10 ">
         <div
           className={`flex flex-col w-full gap-10 ${
-            showingMeal ? "" : "lg:flex-row lg:justify-between"
+            user in profiles ? "" : "lg:flex-row lg:justify-between"
           } `}
         >
-          <Meals showingMeal={showingMeal} />
+          <Meals guestMode={guestMode} />
         </div>
       </div>
 
-      <TranslateButton />
+      <TranslateButton guestMode={guestMode} />
     </div>
   );
 };
 
-const Meals: FC<{ showingMeal?: string }> = ({ showingMeal }) => {
+const Meals: FC<{ guestMode?: boolean }> = ({ guestMode = false }) => {
   const { t, i18n } = useTranslation();
-  const filteredMeals = Object.entries(
-    getMeals(i18n.language as LanguageType)
-  ).filter(([meal, mealInfo]) => meal !== "");
-  const params = useSearchParams();
-  const user = useGetDatabaseValue("user") as string | null;
+
+  const user = useGetDatabaseValue("user") ?? "undefined";
+  const lang = (useGetDatabaseValue("lang") ?? "en") as LanguageType;
   const [profiles, _] = useContext(ProfilesContext);
+  console.log("");
+  const filteredMeals = Object.entries(
+    getMeals(guestMode ? (i18n.language as LanguageType) : lang)
+  ).filter(([meal, mealInfo]) => meal !== "");
   return (
     <>
       {filteredMeals.map(([meal, mealInfo]) => (
@@ -85,7 +88,7 @@ const Meals: FC<{ showingMeal?: string }> = ({ showingMeal }) => {
           key={mealInfo.id}
           {...mealInfo}
           meal={meal}
-          splitScreen={!!showingMeal}
+          splitScreen={guestMode}
         >
           <div className="relative w-[300px] h-[300px]">
             <Image
@@ -95,9 +98,8 @@ const Meals: FC<{ showingMeal?: string }> = ({ showingMeal }) => {
               src={mealInfo.imageSrc}
               width={2080}
             />
-            {user &&
-              !showingMeal &&
-              user in profiles &&
+            {user in profiles &&
+              !guestMode &&
               profiles[user as Profiles].some((fav) => fav === mealInfo.id) && (
                 <p
                   className={`absolute top-[12px] right-[12px] text-2xl  transition-all ease-out duration-200 ${

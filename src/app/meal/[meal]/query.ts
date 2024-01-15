@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 const env = process.env.NODE_ENV;
 export const useGetDatabaseValue = (key: string) => {
   let fallback = useSearchParams().get(key);
+  return fallback;
   const [value, setValue] = useState(undefined);
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export const useGetDatabaseValue = (key: string) => {
         response
           .then((x) => {
             x.json()
-              .then((y) => setValue((_) => y.value))
+              //.then((y) => setValue((_) => y.value))
               .catch((reason) =>
                 console.log(`Failed to parse to json : ${reason}`)
               );
