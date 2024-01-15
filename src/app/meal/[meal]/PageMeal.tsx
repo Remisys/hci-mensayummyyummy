@@ -1,15 +1,15 @@
 "use client";
 import { ProfilesContext } from "@/app/ProfilesContext";
+import { useBestTranslation } from "@/app/i18n";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useContext } from "react";
+import { useSearchParams } from "next/navigation";
+import { useContext } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import { Stairway } from "../../MealButton";
-import type { LanguageType, Profiles } from "../../db";
+import type { Profiles } from "../../db";
 import { MealInfo } from "../../db";
-import deJson from "../../de.json";
 import { useGetDatabaseValue } from "./query";
-type translationKeys = keyof typeof deJson;
 
 export const PageMeal: React.FC<MealInfo> = ({
   imageSrc,
@@ -24,19 +24,13 @@ export const PageMeal: React.FC<MealInfo> = ({
   description,
   id,
 }) => {
-  const lang = (useGetDatabaseValue("lang") as LanguageType) ?? "en";
-  const user = useGetDatabaseValue("user") as Profiles | null;
-  const userParam = `?user=${user}`;
-  const t = useCallback(
-    (tKey: string) => {
-      return lang === "de" ? deJson[tKey as translationKeys] : tKey;
-    },
-    [lang]
-  );
+  const user = (useGetDatabaseValue("user") as Profiles) ?? "undefined";
+  const { t } = useBestTranslation(false);
 
   const [profiles, setProfiles] = useContext(ProfilesContext);
-  const favoriteFoods = user && profiles[user];
+  const favoriteFoods = user in profiles && profiles[user];
   const isFavorite = favoriteFoods && favoriteFoods.some((fav) => fav === id);
+  const params = useSearchParams();
 
   return (
     <div className=" flex flex-col gap-[30px] w-full p-8 border-r ">
@@ -44,7 +38,7 @@ export const PageMeal: React.FC<MealInfo> = ({
         <h1 className="text-2xl font-semibold">{name}</h1>
         <Stairway stairway={stairway} />
         <Link
-          href={`..${user ? userParam : ""}`}
+          href={`../..?${params.toString()}`}
           className="text-2xl font-semibold "
         >
           <IoArrowBack />
@@ -64,7 +58,7 @@ export const PageMeal: React.FC<MealInfo> = ({
           {isFavorite && (
             <p
               className={`absolute top-[12px] right-[12px] text-2xl  transition-all ease-out duration-200 ${
-                user ? "opacity-100" : "opacity-0"
+                user in profiles ? "opacity-100" : "opacity-0"
               }`}
             >{`💖`}</p>
           )}
@@ -73,7 +67,7 @@ export const PageMeal: React.FC<MealInfo> = ({
           <div className=" border border-blue-gray-50 border-solid rounded-lg grow p-5">
             <p className="text-xl h-[80%] ">{`${description}`}</p>
           </div>
-          {user && (
+          {user in profiles && (
             <button
               className={
                 "rounded-lg border border-solid p-2 hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 "
@@ -87,7 +81,7 @@ export const PageMeal: React.FC<MealInfo> = ({
                 });
               }}
             >
-              {user && !isFavorite
+              {user in profiles && !isFavorite
                 ? `${t("Add to your Favorites")} 😍`
                 : `${t("Remove from your Favorites")} `}
             </button>

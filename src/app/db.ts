@@ -54,7 +54,7 @@ const meals: MealMap = {
     imageSrc:
       "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1920&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: ["Chicken", "Parsley", "Onions"],
-    isVegetarian: true,
+    isVegetarian: false,
     isVegan: false,
     isGlutinFree: false,
     price: 5.99,
@@ -221,7 +221,7 @@ const mealsDE: MealMap = {
     href: "meal/meal3",
     imageSrc:
       "https://images.unsplash.com/photo-1565958011703-44f9829ba187?q=80&w=1920&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    isVegetarian: true,
+    isVegetarian: false,
     isVegan: false,
     isGlutinFree: false,
     price: 3.99,

@@ -2,15 +2,15 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { FC } from "react";
-import { useTranslation } from "react-i18next";
 import { GiStairs } from "react-icons/gi";
 import type { MealInfo } from "./db";
+import { useBestTranslation } from "./i18n";
 // Define the MealButton component
 export const MealButton: React.FC<
   MealInfo & {
     children: React.ReactNode;
     meal: string;
-    splitScreen?: boolean;
+    guestMode?: boolean;
   }
 > = ({
   stairway,
@@ -19,20 +19,19 @@ export const MealButton: React.FC<
   children,
   price,
   meal,
-  splitScreen = false,
+  guestMode = false,
 }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useBestTranslation(guestMode);
   const params = useSearchParams();
-  const user = params.get("user");
-  const userParam = `&user=${user}`;
+
   return (
     <Link
-      href={`/meal/${meal}?lang=${i18n.language}${user ? userParam : ""}`}
-      aria-disabled={splitScreen}
-      tabIndex={splitScreen ? -1 : undefined}
+      href={`/meal/${meal}?${params.toString()}`}
+      aria-disabled={guestMode}
+      tabIndex={guestMode ? -1 : undefined}
       className={`${
-        splitScreen ? "items-start disabled pointer-events-none" : ""
-      } w-full group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 flex flex-col items-center xl:items-start`}
+        guestMode ? "items-start disabled pointer-events-none" : ""
+      } w-full lg:w-[30%] group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 flex flex-col items-center xl:items-start`}
     >
       <div className="flex justify-between w-full items-center ">
         <h2 className="mb-3 text-2xl font-semibold">{`${text}`}</h2>
