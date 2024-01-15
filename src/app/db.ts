@@ -18,6 +18,8 @@ type MealMap = {
   [key: string]: MealInfo;
 };
 const meals: MealMap = {
+
+
   salad: {
     stairway: "C",
     id: "salad",
@@ -76,6 +78,76 @@ const meals: MealMap = {
     price: 3.99,
     stairway: "B",
   },
+  falafel: {
+    stairway: "C",
+    id: "falafel",
+    name: "Falafel",
+    description: "Delicious falafel made from chickpeas served with fresh vegetables.",
+    href: "meal/meal4",
+    nutritional_value: ["Calories", "Fat", "Protein", "Sugar", "Fiber"],
+    value: ["220 g", "15 g", "14 g", "2 g", "6 g"],
+    imageSrc: "https://www.alphafoodie.com/wp-content/uploads/2019/04/DSC_1348.jpg",
+    ingredients: [
+        "Chickpeas",
+        "Fresh herbs",
+        "Spices",
+        "Tomatoes",
+        "Cucumber",
+        "Red onion",
+        "Tahini sauce",
+        "Pita bread"
+    ],
+    isVegetarian: true,
+    isVegan: true,
+    isGlutinFree: false,
+    price: 4.49,
+  },
+  fajitaPasta: {
+    stairway: "B",
+    id: "fajitaPasta",
+    name: "Fajita-Style Pasta",
+    description: "Delicious pasta with fajita chicken colorful bell peppers.",
+    href: "meal/meal5",
+    nutritional_value: ["Calories", "Fat", "Protein", "Sugar", "Fiber"],
+    value: ["300 g", "12 g", "18 g", "8 g", "4 g"],
+    imageSrc: "https://images.immediate.co.uk/production/volatile/sites/30/2021/05/Fajita-pasta-e6e5b93.jpg?quality=90&webp=true&resize=600,545",
+    ingredients: [
+        "Pasta",
+        "Chicken strips",
+        "Bell peppers",
+        "Onions",
+        "Tomatoes",
+        "Fajita seasoning",
+        "Olive oil",
+        "Cheese"
+    ],
+    isVegetarian: false,
+    isVegan: false,
+    isGlutinFree: false,
+    price: 7.99,
+},
+currywurst: {
+  stairway: "A",
+  id: "currywurst",
+  name: "Currywurst",
+  description: "German street food sliced grilled sausage, topped with curry ketchup and powder.",
+  href: "mahlzeit/mahlzeit6",
+  nutritional_value: ["Kalorien", "Fett", "Protein", "Zucker", "Ballaststoffe"],
+  value: ["250 g", "20 g", "15 g", "5 g", "2 g"],
+  imageSrc: "https://images.getrecipekit.com/20210913101906-currywurst_vom_grill_566x453.jpg?aspect_ratio=16:9&quality=90",
+  ingredients: [
+      "Bratwurst or bockwurst sausage",
+      "Curry ketchup",
+      "Curry powder",
+      "French fries (optional)"
+  ],
+  isVegetarian: false,
+  isVegan: false,
+  isGlutinFree: true,
+  price: 5.49,
+},
+
+
 };
 
 const mealsDE: MealMap = {
@@ -155,6 +227,76 @@ const mealsDE: MealMap = {
     price: 3.99,
     stairway: "B",
   },
+  falafel: {
+    stairway: "C",
+    id: "falafel",
+    name: "Falafel",
+    description: "Leckere Falafel aus Kichererbsen, serviert mit frischem Gemüse.",
+    href: "mahlzeit/mahlzeit4",
+    nutritional_value: ["Kalorien", "Fett", "Protein", "Zucker", "Ballaststoffe"],
+    value: ["220 g", "15 g", "14 g", "2 g", "6 g"],
+    imageSrc: "https://www.alphafoodie.com/wp-content/uploads/2019/04/DSC_1348.jpg",
+    ingredients: [
+        "Kichererbsen",
+        "Frische Kräuter",
+        "Gewürze",
+        "Tomaten",
+        "Gurke",
+        "Rote Zwiebel",
+        "Tahini-Sauce",
+        "Pita-Brot"
+    ],
+    isVegetarian: true,
+    isVegan: true,
+    isGlutinFree: false,
+    price: 4.49,
+  },
+  fajitaPasta: {
+    stairway: "B",
+    id: "fajitaPasta",
+    name: "Fajita-Style Pasta",
+    description: "Leckere Pasta mit fajita Hähnchen und bunten Paprika.",
+    href: "mahlzeit/mahlzeit5",
+    nutritional_value: ["Kalorien", "Fett", "Protein", "Zucker", "Ballaststoffe"],
+    value: ["300 g", "12 g", "18 g", "8 g", "4 g"],
+    imageSrc: "https://images.immediate.co.uk/production/volatile/sites/30/2021/05/Fajita-pasta-e6e5b93.jpg?quality=90&webp=true&resize=600,545",
+    ingredients: [
+        "Pasta",
+        "Hähnchenstreifen",
+        "Bunte Paprika",
+        "Zwiebeln",
+        "Tomaten",
+        "Fajita-Gewürzmischung",
+        "Olivenöl",
+        "Käse"
+    ],
+    isVegetarian: false,
+    isVegan: false,
+    isGlutinFree: false,
+    price: 7.99,
+},
+currywurst: {
+  stairway: "A",
+  id: "currywurst",
+  name: "Currywurst",
+  description: "Deutsches Streetfood mit geschnittener gegrillter Wurst, übergossen mit Curryketchup und Pulver.",
+  href: "mahlzeit/mahlzeit6",
+  nutritional_value: ["Kalorien", "Fett", "Protein", "Zucker", "Ballaststoffe"],
+  value: ["250 g", "20 g", "15 g", "5 g", "2 g"],
+  imageSrc: "https://images.getrecipekit.com/20210913101906-currywurst_vom_grill_566x453.jpg?aspect_ratio=16:9&quality=90",
+  ingredients: [
+      "Bratwurst oder Bockwurst",
+      "Curryketchup",
+      "Currypulver",
+      "Pommes frites (optional)"
+  ],
+  isVegetarian: false,
+  isVegan: false,
+  isGlutinFree: true,
+  price: 5.49,
+},
+
+
 };
 export const profiles = {
   thomas: ["salad"],
