@@ -63,7 +63,7 @@ export const Home: React.FC<{ guestMode?: boolean }> = ({
 
       <div className="w-full grow items-center flex my-10 ">
         <div
-          className={`flex flex-col w-full gap-10 ${
+          className={`flex flex-col w-full gap-10 flex-wrap ${
             user in profiles ? "" : "lg:flex-row lg:justify-between"
           } `}
         >

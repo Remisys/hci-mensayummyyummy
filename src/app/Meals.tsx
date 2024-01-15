@@ -16,7 +16,6 @@ export const Meals: FC<{ guestMode?: boolean }> = ({ guestMode = false }) => {
   const isVegetarian = useGetDatabaseValue("vegetarian") ?? false;
   const isVegan = useGetDatabaseValue("vegan") ?? false;
   const [profiles, _] = useContext(ProfilesContext);
-  console.log("");
   let filteredMeals = Object.entries(
     getMeals(guestMode ? (i18n.language as LanguageType) : lang)
   )
@@ -37,12 +36,7 @@ export const Meals: FC<{ guestMode?: boolean }> = ({ guestMode = false }) => {
   return (
     <>
       {filteredMeals.map(([meal, mealInfo]) => (
-        <MealButton
-          key={mealInfo.id}
-          {...mealInfo}
-          meal={meal}
-          guestMode={guestMode}
-        >
+        <MealButton key={meal} {...mealInfo} meal={meal} guestMode={guestMode}>
           <div className="relative w-[300px] h-[300px]">
             <Image
               alt=""

@@ -31,7 +31,7 @@ export const MealButton: React.FC<
       tabIndex={guestMode ? -1 : undefined}
       className={`${
         guestMode ? "items-start disabled pointer-events-none" : ""
-      } w-full group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 flex flex-col items-center xl:items-start`}
+      } w-full lg:w-[30%] group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 flex flex-col items-center xl:items-start`}
     >
       <div className="flex justify-between w-full items-center ">
         <h2 className="mb-3 text-2xl font-semibold">{`${text}`}</h2>
