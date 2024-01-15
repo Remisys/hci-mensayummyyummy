@@ -3,8 +3,9 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { FC } from "react";
 import { GiStairs } from "react-icons/gi";
-import type { MealInfo } from "./db";
+import { profiles, type MealInfo } from "./db";
 import { useBestTranslation } from "./i18n";
+import { useGetDatabaseValue } from "./meal/[meal]/query";
 // Define the MealButton component
 export const MealButton: React.FC<
   MealInfo & {
@@ -23,7 +24,7 @@ export const MealButton: React.FC<
 }) => {
   const { t } = useBestTranslation(guestMode);
   const params = useSearchParams();
-
+  const user = useGetDatabaseValue("user");
   return (
     <Link
       href={`/meal/${meal}?${params.toString()}`}
@@ -31,7 +32,9 @@ export const MealButton: React.FC<
       tabIndex={guestMode ? -1 : undefined}
       className={`${
         guestMode ? "items-start disabled pointer-events-none" : ""
-      } w-full lg:w-[30%] group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 flex flex-col items-center xl:items-start`}
+      } w-full ${
+        user in profiles ? "" : "lg:w-[30%]"
+      } group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 flex flex-col items-center xl:items-start`}
     >
       <div className="flex justify-between w-full items-center ">
         <h2 className="mb-3 text-2xl font-semibold">{`${text}`}</h2>
@@ -44,7 +47,7 @@ export const MealButton: React.FC<
       </p>
       <p className="mt-2 text-lg font-bold">{`${t("Price")}: ${price.toFixed(
         2
-      )}`}</p>
+      )}€`}</p>
     </Link>
   );
 };

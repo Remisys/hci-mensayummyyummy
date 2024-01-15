@@ -7,22 +7,14 @@ import { Meals } from "./Meals";
 import { TranslateButton } from "./TranslateButton";
 import { profiles } from "./db";
 import { useGetDatabaseValue } from "./meal/[meal]/query";
-import { useTimer } from "./useTimer";
+import { timerStyle, timerStyleRed, useTimer } from "./useTimer";
 
 export const Home: React.FC<{ guestMode?: boolean }> = ({
   guestMode = false,
 }) => {
   const user = useGetDatabaseValue("user") ?? "undefined";
   const { t } = useTranslation();
-  const timerStyle = `
-    absolute top-0 left-0 m-4
-    bg-white text-black
-    px-3 py-2
-    border border-gray-300
-    rounded-lg
-    shadow
-    font-bold text-lg
-  `;
+
   const timeLeft = useTimer();
   return (
     <div
@@ -30,7 +22,15 @@ export const Home: React.FC<{ guestMode?: boolean }> = ({
         user in profiles ? "" : " "
       } `}
     >
-      <div className={timerStyle}>
+      <div
+        className={
+          user in profiles
+            ? timeLeft > 10
+              ? timerStyle
+              : timerStyleRed
+            : "hidden"
+        }
+      >
         <span>Time left: {timeLeft}s</span>
       </div>
 

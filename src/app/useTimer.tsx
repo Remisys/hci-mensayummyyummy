@@ -47,3 +47,23 @@ export const useTimer = () => {
   }, [timeLeft, user, profiles, params, replace, pathname]);
   return timeLeft;
 };
+
+export const timerStyle = `
+absolute top-0 left-0 m-4
+bg-white text-black
+px-3 py-2 z-[100]
+border border-gray-300
+rounded-lg
+shadow
+font-bold text-lg
+`;
+
+export const timerStyleRed = `
+absolute top-0 left-0 m-4
+bg-red-500 text-white
+px-3 py-2 z-[100]
+border border-gray-300
+rounded-lg
+shadow
+font-bold text-lg
+`;

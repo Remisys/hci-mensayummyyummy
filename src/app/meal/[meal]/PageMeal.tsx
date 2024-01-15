@@ -4,11 +4,12 @@ import { useBestTranslation } from "@/app/i18n";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import { Stairway } from "../../MealButton";
 import type { Profiles } from "../../db";
 import { MealInfo } from "../../db";
+import { YesNoIcon } from "./YesNoIcon";
 import { useGetDatabaseValue } from "./query";
 
 export const PageMeal: React.FC<MealInfo> = ({
@@ -21,6 +22,7 @@ export const PageMeal: React.FC<MealInfo> = ({
   value,
   name,
   stairway,
+  price,
   description,
   id,
 }) => {
@@ -31,9 +33,9 @@ export const PageMeal: React.FC<MealInfo> = ({
   const favoriteFoods = user in profiles && profiles[user];
   const isFavorite = favoriteFoods && favoriteFoods.some((fav) => fav === id);
   const params = useSearchParams();
-
+  const [isPurchased, setPurchased] = useState(false);
   return (
-    <div className=" flex flex-col gap-[30px] w-full p-8 border-r ">
+    <div className="relative flex flex-col gap-[30px] w-full p-8 border-r ">
       <div className="flex justify-between w-100">
         <h1 className="text-2xl font-semibold">{name}</h1>
         <Stairway stairway={stairway} />
@@ -68,23 +70,39 @@ export const PageMeal: React.FC<MealInfo> = ({
             <p className="text-xl h-[80%] ">{`${description}`}</p>
           </div>
           {user in profiles && (
-            <button
-              className={
-                "rounded-lg border border-solid p-2 hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 "
-              }
-              onClick={() => {
-                setProfiles((profiles) => {
-                  profiles[user] = isFavorite
-                    ? profiles[user].filter((x) => x !== id)
-                    : [...profiles[user], id];
-                  return { ...profiles };
-                });
-              }}
-            >
-              {user in profiles && !isFavorite
-                ? `${t("Add to your Favorites")} 😍`
-                : `${t("Remove from your Favorites")} `}
-            </button>
+            <>
+              <button
+                className={
+                  "rounded-lg border border-solid p-2 hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30 "
+                }
+                onClick={() => {
+                  setProfiles((profiles) => {
+                    profiles[user] = isFavorite
+                      ? profiles[user].filter((x) => x !== id)
+                      : [...profiles[user], id];
+                    return { ...profiles };
+                  });
+                }}
+              >
+                {user in profiles && !isFavorite
+                  ? `${t("Add to your Favorites")} 😍`
+                  : `${t("Remove from your Favorites")} `}
+              </button>
+              <button
+                className={`rounded-lg border  border-solid p-2 hover:bg-gray-100 ${
+                  !isPurchased
+                    ? " hover:border-gray-300 "
+                    : " border-green-500  text-green-500 "
+                } hover:dark:border-neutral-700  hover:dark:bg-neutral-800/30 `}
+                onClick={() => {
+                  setPurchased(() => true);
+                }}
+              >
+                {!isPurchased
+                  ? `${t("Purchase for")} ${price}€`
+                  : t("Purchased")}
+              </button>
+            </>
           )}
         </div>
       </div>
@@ -152,13 +170,3 @@ export const PageMeal: React.FC<MealInfo> = ({
     </div>
   );
 };
-
-export const YesNoIcon: React.FC<{ checked: boolean; text: string }> = ({
-  checked,
-  text,
-}) => (
-  <div className="flex gap-2">
-    <p>{text}</p>
-    <p>{checked ? "✅" : "❌"}</p>
-  </div>
-);

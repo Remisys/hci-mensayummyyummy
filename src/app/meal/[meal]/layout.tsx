@@ -13,7 +13,7 @@ const Layout: FC<{ params: { meal: string }; children: ReactNode }> = ({
   return (
     <div className="flex flex-col lg:flex-row w-100 h-screen">
       <div
-        className={`w-full${
+        className={`relative w-full ${
           user in profiles ? "h-[50%] lg:w-[50%] lg:h-full" : ""
         } overflow-y-auto  max-h-screen`}
       >
