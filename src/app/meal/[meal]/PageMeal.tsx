@@ -1,12 +1,13 @@
 "use client";
 import { ProfilesContext } from "@/app/ProfilesContext";
-import { useCustomTranslation } from "@/app/i18n";
+import { useBestTranslation } from "@/app/i18n";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useContext } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import { Stairway } from "../../MealButton";
-import type { LanguageType, Profiles } from "../../db";
+import type { Profiles } from "../../db";
 import { MealInfo } from "../../db";
 import { useGetDatabaseValue } from "./query";
 
@@ -23,14 +24,13 @@ export const PageMeal: React.FC<MealInfo> = ({
   description,
   id,
 }) => {
-  const lang = (useGetDatabaseValue("lang") as LanguageType) ?? "en";
   const user = useGetDatabaseValue("user") as Profiles | null;
-  const userParam = `?user=${user}`;
-  const { t } = useCustomTranslation();
+  const { t } = useBestTranslation(false);
 
   const [profiles, setProfiles] = useContext(ProfilesContext);
   const favoriteFoods = user && profiles[user];
   const isFavorite = favoriteFoods && favoriteFoods.some((fav) => fav === id);
+  const params = useSearchParams();
 
   return (
     <div className=" flex flex-col gap-[30px] w-full p-8 border-r ">
@@ -38,7 +38,7 @@ export const PageMeal: React.FC<MealInfo> = ({
         <h1 className="text-2xl font-semibold">{name}</h1>
         <Stairway stairway={stairway} />
         <Link
-          href={`..${user ? userParam : ""}`}
+          href={`../..?${params.toString()}`}
           className="text-2xl font-semibold "
         >
           <IoArrowBack />

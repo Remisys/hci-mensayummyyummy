@@ -1,6 +1,8 @@
 import i18n from "i18next";
+import { useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import { initReactI18next, useTranslation } from "react-i18next";
+import { LanguageType } from "./db";
 import deJson from "./de.json";
 
 // the translations
@@ -36,13 +38,20 @@ export const useTranslationPlus = () => {
 
 export type translationKeys = keyof typeof deJson;
 
-export const useCustomTranslation = () => {
-  const { i18n } = useTranslation();
+const useCustomTranslation = () => {
+  const lang = useSearchParams().get("lang") ?? ("en" as LanguageType);
+
   const t = useCallback(
     (tKey: string) => {
-      return i18n.language === "de" ? deJson[tKey as translationKeys] : tKey;
+      return lang === "de" ? deJson[tKey as translationKeys] : tKey;
     },
-    [i18n.language]
+    [lang]
   );
   return { t };
+};
+
+export const useBestTranslation = (guestMode: boolean) => {
+  const { t: originalT, i18n } = useTranslation();
+  const { t: customT } = useCustomTranslation();
+  return { t: guestMode ? originalT : customT, i18n };
 };

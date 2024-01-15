@@ -9,7 +9,7 @@ import { MealButton } from "./MealButton";
 import { ProfilesContext } from "./ProfilesContext";
 import { TranslateButton } from "./TranslateButton";
 import { LanguageType, Profiles, getMeals, profiles } from "./db";
-import { useCustomTranslation } from "./i18n";
+import { useBestTranslation } from "./i18n";
 import { useGetDatabaseValue } from "./meal/[meal]/query";
 
 // Define the Home component
@@ -20,9 +20,8 @@ export const Home: React.FC<{ guestMode?: boolean }> = ({
   // Filter vegetarian meals
 
   const user = useGetDatabaseValue("user") ?? "undefined";
-  const { t: customT } = useCustomTranslation();
-  const { t: originalT } = useTranslation();
-  const t = guestMode ? originalT : customT;
+  const { t } = useBestTranslation(guestMode);
+
   return (
     <div
       className={`flex  flex-col items-stretch  w-full h-full  py-10 px-10 ${
@@ -76,11 +75,20 @@ const Meals: FC<{ guestMode?: boolean }> = ({ guestMode = false }) => {
 
   const user = useGetDatabaseValue("user") ?? "undefined";
   const lang = (useGetDatabaseValue("lang") ?? "en") as LanguageType;
+  const isVegetarian = useGetDatabaseValue("vegetarian") ?? false;
+  const isVegan = useGetDatabaseValue("vegan") ?? false;
   const [profiles, _] = useContext(ProfilesContext);
   console.log("");
-  const filteredMeals = Object.entries(
+  let filteredMeals = Object.entries(
     getMeals(guestMode ? (i18n.language as LanguageType) : lang)
-  ).filter(([meal, mealInfo]) => meal !== "");
+  )
+    .filter(
+      ([, mealInfo]) =>
+        (isVegetarian && mealInfo.isVegetarian) || !isVegetarian || guestMode
+    )
+    .filter(
+      ([, mealInfo]) => (isVegan && mealInfo.isVegan) || !isVegan || guestMode
+    );
   return (
     <>
       {filteredMeals.map(([meal, mealInfo]) => (
@@ -88,7 +96,7 @@ const Meals: FC<{ guestMode?: boolean }> = ({ guestMode = false }) => {
           key={mealInfo.id}
           {...mealInfo}
           meal={meal}
-          splitScreen={guestMode}
+          guestMode={guestMode}
         >
           <div className="relative w-[300px] h-[300px]">
             <Image

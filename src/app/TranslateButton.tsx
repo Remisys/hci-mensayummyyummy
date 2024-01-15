@@ -1,6 +1,6 @@
 "use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { LanguageType } from "./db";
 import { useTranslationPlus } from "./i18n";
 
@@ -9,9 +9,7 @@ export const TranslateButton: FC<{ guestMode?: boolean }> = ({
 }) => {
   const { i18n } = useTranslationPlus();
   const [language, setLanguage] = useState<LanguageType>("en");
-  useEffect(() => {
-    i18n.changeLanguage(language);
-  }, [i18n, language]);
+
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
