@@ -1,6 +1,6 @@
 // Import necessary libraries and components
 "use client";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { ProfilesContext } from "./ProfilesContext";
 import { setDatabaseValue, useGetDatabaseValue } from "./meal/[meal]/query";
@@ -10,7 +10,8 @@ export const useTimer = () => {
 
   const user = useGetDatabaseValue("user") ?? "undefined";
   const params = useSearchParams();
-
+  const { replace } = useRouter();
+  const pathname = usePathname();
   const [profiles, _] = useContext(ProfilesContext);
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -26,6 +27,7 @@ export const useTimer = () => {
         const newParams = new URLSearchParams(params);
         newParams.delete("user");
         setDatabaseValue("user", "undefined");
+        replace(`${pathname}?${newParams.toString()}`);
         return;
       }
 
@@ -42,6 +44,6 @@ export const useTimer = () => {
       localStorage.removeItem("timeLeft");
       setTimeLeft(120);
     }
-  }, [timeLeft, user, profiles, params]);
+  }, [timeLeft, user, profiles, params, replace, pathname]);
   return timeLeft;
 };
