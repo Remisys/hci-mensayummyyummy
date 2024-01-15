@@ -1,13 +1,15 @@
 // Import necessary libraries and components
 "use client";
+import { useSearchParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { ProfilesContext } from "./ProfilesContext";
-import { useGetDatabaseValue } from "./meal/[meal]/query";
+import { setDatabaseValue, useGetDatabaseValue } from "./meal/[meal]/query";
 
 export const useTimer = () => {
   const [timeLeft, setTimeLeft] = useState(120);
 
   const user = useGetDatabaseValue("user") ?? "undefined";
+  const params = useSearchParams();
 
   const [profiles, _] = useContext(ProfilesContext);
   useEffect(() => {
@@ -21,9 +23,9 @@ export const useTimer = () => {
     if (user in profiles) {
       if (timeLeft === 0) {
         localStorage.removeItem("timeLeft");
-        if (typeof window !== "undefined") {
-          window.location.href = "/";
-        }
+        const newParams = new URLSearchParams(params);
+        newParams.delete("user");
+        setDatabaseValue("user", "undefined");
         return;
       }
 
@@ -40,6 +42,6 @@ export const useTimer = () => {
       localStorage.removeItem("timeLeft");
       setTimeLeft(120);
     }
-  }, [timeLeft, user, profiles]);
+  }, [timeLeft, user, profiles, params]);
   return timeLeft;
 };

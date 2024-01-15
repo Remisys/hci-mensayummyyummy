@@ -22,10 +22,17 @@ export const Meals: FC<{ guestMode?: boolean }> = ({ guestMode = false }) => {
   )
     .filter(
       ([, mealInfo]) =>
-        (isVegetarian && mealInfo.isVegetarian) || !isVegetarian || guestMode
+        (isVegetarian && mealInfo.isVegetarian) ||
+        !isVegetarian ||
+        guestMode ||
+        !(user in profiles)
     )
     .filter(
-      ([, mealInfo]) => (isVegan && mealInfo.isVegan) || !isVegan || guestMode
+      ([, mealInfo]) =>
+        (isVegan && mealInfo.isVegan) ||
+        !isVegan ||
+        guestMode ||
+        !(user in profiles)
     );
   return (
     <>
