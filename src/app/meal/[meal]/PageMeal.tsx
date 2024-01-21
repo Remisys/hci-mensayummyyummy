@@ -34,19 +34,21 @@ export const PageMeal: React.FC<MealInfo> = ({
   const isFavorite = favoriteFoods && favoriteFoods.some((fav) => fav === id);
   const params = useSearchParams();
   const [isPurchased, setPurchased] = useState(false);
+
   return (
-    <div className="relative flex flex-col gap-[30px] w-full p-8 border-r ">
+    <div className="relative flex flex-col gap-[40px] w-full p-10 border-r ">
       <div className="flex justify-between w-100">
-        <h1 className="text-2xl font-semibold">{name}</h1>
-        <Stairway stairway={stairway} />
+        <h1 className="text-3xl font-semibold">{name}</h1>
+        <div style={{ transform: 'scale(1.5)' }}>
+          <Stairway stairway={stairway} />
+        </div>
         <Link
           href={`../..?${params.toString()}`}
-          className="text-2xl font-semibold "
+          className="text-3xl font-semibold"
         >
           <IoArrowBack />
         </Link>
       </div>
-
       <div className="flex w-full gap-5 items-center lg:items-stretch lg:justify-between flex-col lg:flex-row">
         <div className="relative w-[300px] h-[300px]">
           <Image
