@@ -305,10 +305,10 @@ export const profiles = {
 };
 
 export const getMeals = (lang: LanguageType) => {
-  return lang === "de" ? mealsDE : meals;
+  return lang === "en" ? mealsDE : meals;
 };
 
-export type LanguageType = "de" | "en";
+export type LanguageType = "en" | "de";
 export type Profiles = keyof typeof profiles;
 export const loginname = "admin";
 export const loginpass = "admin";
