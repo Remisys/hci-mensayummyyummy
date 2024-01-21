@@ -15,19 +15,21 @@ export const TranslateButton: FC<{ guestMode?: boolean }> = ({
   const { replace } = useRouter();
 
   return (
-    <button
-      onClick={() => {
-        setLanguage((l) => (l === "de" ? "en" : "de"));
-        if (guestMode) i18n.changeLanguage(language === "de" ? "en" : "de");
-        if (!guestMode) {
-          const params = new URLSearchParams(searchParams);
-          params.set("lang", language === "de" ? "en" : "de");
-          replace(`${pathname}?${params.toString()}`);
-        }
-      }}
-      className="font-bold font-xl w-full group rounded-lg border border-transparent px-5 py-4 transition-colors border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-    >
-      {language.toUpperCase()}
-    </button>
+    <div className="flex justify-end"> {/* Aligning the button to the right */}
+      <button
+        onClick={() => {
+          setLanguage((l) => (l === "de" ? "en" : "de"));
+          if (guestMode) i18n.changeLanguage(language === "de" ? "en" : "de");
+          if (!guestMode) {
+            const params = new URLSearchParams(searchParams);
+            params.set("lang", language === "de" ? "en" : "de");
+            replace(`${pathname}?${params.toString()}`);
+          }
+        }}
+        className="font-bold text-xl py-3 px-8 group rounded-lg border border-transparent transition-colors border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
+      >
+        {language.toUpperCase()}
+      </button>
+    </div>
   );
 };
