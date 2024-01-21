@@ -38,8 +38,12 @@ export const MealButton: React.FC<
     >
       <div className="flex justify-between w-full items-center ">
         <h2 className="mb-3 text-2xl font-semibold">{`${text}`}</h2>
+        <div style={{ transform: 'scale(1.5)' }}>
+
         <Stairway stairway={stairway} />
-      </div>
+        </div>
+        </div>
+
 
       {children}
       <p className="m-0 mt-2 max-w-[30ch] text-sm opacity-70">
@@ -53,12 +57,12 @@ export const MealButton: React.FC<
 };
 
 export const Stairway: FC<{ stairway: string }> = ({ stairway }) => (
-  <p className="text-2xl   ">
-    <span className=" inline-block font-bold transition-all animate-[up_1s_linear_infinite] relative left-[10px] bottom-[5px]">
+  <p className="text-2xl" style={{ fontSize: '2rem' }}> {/* Adjust fontSize as needed */}
+    <span className="inline-block font-bold transition-all animate-[up_1s_linear_infinite] relative left-[10px] bottom-[5px]">
       -&gt;
     </span>
-    <span className="inline-block  relative top-1 ">
-      <GiStairs />
+    <span className="inline-block relative top-1">
+      <GiStairs size={50} />{}
     </span>
     <span className="ml-2 font-normal">{`${stairway}`}</span>
   </p>
